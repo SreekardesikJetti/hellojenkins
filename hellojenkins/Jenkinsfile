@@ -4,35 +4,24 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/SreekardesikJetti/hellojenkins'
+                git 'https://github.com/SreekardesikJetti/hellojenkins'
             }
         }
 
-        stage('Debug') {
+        stage('Build') {
             steps {
-                sh 'pwd'
-                sh 'ls -la'
+                dir('hellojenkins') {
+                    sh 'mvn clean install'
+                }
             }
         }
 
-     stage('Build') {
-    steps {
-        dir('hellojenkins') {
-            sh 'mvn clean install'
-        }
-    }
-
-
-
-       stage('Run') {
-    steps {
-        dir('hellojenkins') {
-            sh 'nohup java -jar target/*.jar &'
+        stage('Run') {
+            steps {
+                dir('hellojenkins') {
+                    sh 'nohup java -jar target/*.jar &'
+                }
+            }
         }
     }
 }
-
-}
-
-
-
