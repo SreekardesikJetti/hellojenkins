@@ -15,18 +15,23 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean install'
-            }
-        }
-
-        stage('Run') {
-            steps {
-                sh 'nohup java -jar target/*.jar &'
-            }
+     stage('Build') {
+    steps {
+        dir('hellojenkins') {
+            sh 'mvn clean install'
         }
     }
+
+
+
+       stage('Run') {
+    steps {
+        dir('hellojenkins') {
+            sh 'nohup java -jar target/*.jar &'
+        }
+    }
+}
+
 }
 
 
