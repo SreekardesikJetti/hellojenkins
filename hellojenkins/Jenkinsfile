@@ -2,21 +2,27 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/SreekardesikJetti/hellojenkins'
+            }
+        }
+
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'echo "No Maven project — skipping mvn build"'
+                // Replace with your actual build script, like:
+                // sh 'npm install' for Node.js
+                // or sh './build.sh' if you have a script
             }
         }
-        stage('Run') {
-            steps {
-                sh 'nohup mvn spring-boot:run &'
-                sh 'sleep 10'
-            }
-        }
+
         stage('Test') {
             steps {
-                sh 'curl http://localhost:8080'
+                sh 'echo "Run your tests here"'
+                // For example: sh 'npm test' or ./run-tests.sh
             }
         }
     }
 }
+
